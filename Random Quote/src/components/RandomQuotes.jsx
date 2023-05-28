@@ -7,6 +7,7 @@ const RandomQuotes = () => {
       text: "",
       author: "",
    })
+   const [isLoading, setIsLoading] = useState(true)
 
    useEffect(() => {
       fetchQuote();
@@ -17,13 +18,17 @@ const RandomQuotes = () => {
       const jsonResponse = await response.json();
       const randomQuote = jsonResponse.quote;
       setQuote(randomQuote);
+      setIsLoading(false)
    }
 
    return (
       <div>
-         <h1>{quote.text}</h1>
-         <h3>{quote.author}</h3>
-         <button onClick={fetchQuote}>New Quote</button>
+         {isLoading && <h1>Loading...</h1>}
+         {!isLoading && <div>
+            <h1>{quote.text}</h1>
+            <h3>{quote.author}</h3>
+            <button onClick={fetchQuote}>New Quote</button>
+         </div>}
       </div>
    );
 }
